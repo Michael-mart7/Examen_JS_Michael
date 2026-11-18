@@ -1,5 +1,6 @@
 export const STORAGE_KEY = 'proyecto-tareas-v1';
 export const API_URL = 'https://jsonplaceholder.typicode.com/todos';
+export const CATEGORIES_STORAGE_KEY = 'proyecto-tareas-v1';
 
 export const TASK_ORIGIN = {
     LOCAL: 'local',
