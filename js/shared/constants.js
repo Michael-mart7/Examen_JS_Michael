@@ -29,5 +29,7 @@ export const EVENTS = {
     IMPORT: 'task:import',
     FILTER: 'task:filter',
     SEARCH: 'task:search',
+    CATEGORY_SAVE: 'category:save',
+    CATEGORY_DELETE: 'category:delete',
     API_RETRY: 'task:api-retry'
 };
