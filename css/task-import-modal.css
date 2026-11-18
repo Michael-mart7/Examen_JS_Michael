@@ -1,0 +1,244 @@
+
+:host {
+    display: block;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+.overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background-color: rgba(30, 41, 59, 0.45);
+}
+
+.modal {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 700px;
+    max-height: 85vh;
+    background-color: white;
+    border-radius: 14px;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.15);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 25px;
+    border-bottom: 1px solid var(--color-borde);
+}
+
+.modal-header h2 {
+    margin: 0;
+    color: var(--color-texto);
+    font-size: 24px;
+}
+
+.modal-header p {
+    margin: 8px 0 0;
+    color: var(--color-secundario);
+    font-size: 14px;
+}
+
+.btn-close {
+    padding: 0 8px;
+    background: none;
+    color: var(--color-secundario);
+    font-size: 28px;
+}
+
+.modal-content {
+    flex: 1;
+    min-height: 0;
+    padding: 20px 25px;
+    overflow-y: auto;
+}
+
+#searchInput {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid var(--color-borde);
+    border-radius: var(--radio);
+    font-size: 14px;
+}
+
+#searchInput:focus-visible,
+input:focus-visible,
+button:focus-visible {
+    outline: 3px solid rgba(83, 105, 223, 0.3);
+    outline-offset: 2px;
+}
+
+.select-all {
+    margin-bottom: 15px;
+    color: var(--color-texto);
+    font-size: 14px;
+}
+
+.select-all label {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    cursor: pointer;
+}
+
+input[type="checkbox"] {
+    width: 17px;
+    height: 17px;
+    accent-color: var(--color-primario);
+    cursor: pointer;
+}
+
+.status-message {
+    margin: 12px 0;
+    color: var(--color-secundario);
+    font-size: 14px;
+}
+
+.status-message.error {
+    color: var(--color-peligro);
+}
+
+.task-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.task-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px;
+    border: 1px solid var(--color-borde);
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.task-item:hover {
+    background-color: var(--color-fondo);
+}
+
+.task-item input:disabled {
+    cursor: not-allowed;
+}
+
+.task-title {
+    flex: 1;
+    color: var(--color-texto);
+    font-size: 14px;
+}
+
+.badge {
+    padding: 5px 9px;
+    border-radius: 20px;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.badge.completed {
+    background-color: #dcfce7;
+    color: #166534;
+}
+
+.badge.pending {
+    background-color: #fef3c7;
+    color: #92400e;
+}
+
+.badge.imported {
+    background-color: #e2e8f0;
+    color: #475569;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    padding: 20px 25px;
+    border-top: 1px solid var(--color-borde);
+    color: var(--color-secundario);
+    font-size: 14px;
+}
+
+.modal-footer div {
+    display: flex;
+    gap: 10px;
+}
+
+button {
+    padding: 11px 15px;
+    border: none;
+    border-radius: var(--radio);
+    cursor: pointer;
+}
+
+.btn-primary {
+    background-color: var(--color-primario);
+    color: white;
+}
+
+.btn-secondary {
+    background-color: white;
+    color: var(--color-texto);
+    border: 1px solid var(--color-borde);
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+@media (max-width: 600px) {
+    .overlay {
+        padding: 10px;
+    }
+
+    .modal {
+        max-height: 92vh;
+    }
+
+    .modal-header,
+    .modal-content,
+    .modal-footer {
+        padding: 16px;
+    }
+
+    .modal-header h2 {
+        font-size: 20px;
+    }
+
+    .modal-footer {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .modal-footer div {
+        width: 100%;
+    }
+
+    .modal-footer button {
+        flex: 1;
+    }
+
+    .task-item {
+        flex-wrap: wrap;
+        gap: 8px;
+        padding: 10px;
+    }
+
+    .task-title {
+        min-width: 150px;
+    }
+}

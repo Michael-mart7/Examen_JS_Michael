@@ -1,0 +1,245 @@
+/* Estilos internos de <task-item>. Viven dentro del Shadow DOM. */
+/* Las columnas deben ser IGUALES a las de la cabecera en task-list.css */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box; /* global.css no atraviesa el Shadow DOM */
+}
+
+:host {
+    display: block;
+    --suave: #566175; /* gris con contraste suficiente (4.5:1) sobre blanco */
+}
+
+:host(:last-child) .fila {
+    border-bottom: 0;
+}
+
+.fila {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 150px 150px 130px 220px;    align-items: center;
+    gap: 0.5rem;
+    min-height: 72px;
+    padding: 0 1.5rem;
+    background: var(--color-superficie, #ffffff);
+    color: var(--color-texto, #293141);
+    border-bottom: 1px solid var(--color-borde, #dce2ea);
+    font-size: 0.95rem;
+}
+
+.celda {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-width: 0;
+}
+
+.tarea {
+    gap: 1rem;
+}
+
+.titulo {
+    overflow-wrap: anywhere;
+}
+
+.completada .titulo {
+    text-decoration: line-through;
+    color: var(--suave);
+}
+
+.check {
+    flex: none;
+    width: 22px;
+    height: 22px;
+    margin: 0;
+    accent-color: var(--color-primario, #5369df);
+    cursor: pointer;
+}
+
+.check:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.fecha,
+.origen {
+    color: var(--suave);
+}
+
+.icono {
+    flex: none;
+}
+
+/* Estado */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.2rem 0.65rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+}
+
+.badge.pendiente {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.badge.ok {
+    background: #dcfce7;
+    color: #166534;
+}
+
+/* Acciones */
+.acciones {
+    justify-content: flex-end;
+    gap: 0;
+}
+
+.acciones .btn {
+    white-space: nowrap;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    min-height: 44px;
+    padding: 0 0.6rem;
+    border: 0;
+    background: none;
+    font: inherit;
+    font-size: 0.9rem;
+    cursor: pointer;
+    border-radius: var(--radio, 10px);
+}
+
+.editar {
+    color: var(--color-primario, #5369df);
+}
+.ver {
+    color: #0369a1;
+}
+
+.eliminar {
+    color: var(--suave);
+    border-left: 1px solid var(--color-borde, #dce2ea);
+    border-radius: 0 var(--radio, 10px) var(--radio, 10px) 0;
+}
+
+.eliminar:hover {
+    color: #b91c1c;
+}
+
+.btn:disabled {
+    color: #98a2b3;
+    cursor: not-allowed;
+}
+
+/* Foco visible en todo lo interactivo */
+.check:focus-visible,
+.btn:focus-visible {
+    outline: 2px solid var(--color-primario, #5369df);
+    outline-offset: 2px;
+}
+
+/* Tablet y móvil: cada tarea se muestra como una tarjeta */
+@media (max-width: 900px) {
+
+    .fila {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        grid-template-areas:
+            "tarea tarea"
+            "fecha estado"
+            "origen acciones";
+        gap: 12px;
+        min-height: 0;
+        padding: 16px;
+    }
+
+    /* Título y checkbox */
+    .tarea {
+        grid-area: tarea;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .titulo {
+        min-width: 0;
+        overflow-wrap: break-word;
+        word-break: normal;
+        line-height: 1.4;
+    }
+
+    /* Fecha */
+    .fecha {
+        grid-area: fecha;
+        font-size: 0.82rem;
+    }
+
+    .fecha::before {
+        content: "Fecha: ";
+        color: var(--suave);
+        white-space: nowrap;
+    }
+
+    /* Estado */
+    .estado {
+        grid-area: estado;
+        justify-self: end;
+    }
+
+    /* Origen */
+    .origen {
+        grid-area: origen;
+        font-size: 0.82rem;
+    }
+
+    /* Acciones */
+    .acciones {
+        grid-area: acciones;
+        justify-content: flex-end;
+        gap: 8px;
+    }
+
+    /* Botones únicamente con iconos */
+    .btn {
+        width: 40px;
+        height: 40px;
+        min-height: 40px;
+        justify-content: center;
+        padding: 0;
+        font-size: 0;
+        border-radius: 8px;
+    }
+
+    .btn .icono {
+        width: 18px;
+        height: 18px;
+    }
+
+    .editar {
+        background-color: #eef1fd;
+        color: var(--color-primario, #5369df);
+    }
+
+    .ver {
+    background-color: #e0f2fe;
+    color: #0369a1;
+}
+
+    .eliminar {
+        border: none;
+        border-radius: 8px;
+        background-color: #fee2e2;
+        color: #dc2626;
+    }
+
+    /* No mostrar edición para tareas importadas */
+    .editar:disabled {
+        display: none;
+    }
+
+}
