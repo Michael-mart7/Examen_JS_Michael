@@ -16,6 +16,7 @@ export function createLocalTask({ title, description = '', completed = false }) 
         id: generateId(),
         title: title.trim(),
         description: description.trim(),
+        category: category.trim(),
         createdAt: new Date().toISOString(),
         completed: completed,
         origin: TASK_ORIGIN.LOCAL,
