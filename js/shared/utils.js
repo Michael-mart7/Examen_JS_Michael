@@ -11,12 +11,12 @@ export function generateId() {
 }
 
 // Crear tarea local
-export function createLocalTask({ title, description = '', completed = false }) {
+export function createLocalTask({ title, description = '', completed = false, categoryId = null }) {
     return {
         id: generateId(),
         title: title.trim(),
         description: description.trim(),
-        category: category.trim(),
+        categoryId: categoryId(),
         createdAt: new Date().toISOString(),
         completed: completed,
         origin: TASK_ORIGIN.LOCAL,
@@ -25,11 +25,12 @@ export function createLocalTask({ title, description = '', completed = false }) 
 }
 
 // Crear tarea importada
-export function createImportedTask(apiTask) {
+export function createImportedTask(apiTask, categoryId = null) {
     return {
         id: generateId(),
         title: apiTask.title,
         description: '',
+        categoryId: categoryId,
         createdAt: new Date().toISOString(),
         completed: apiTask.completed,
         origin: TASK_ORIGIN.API,

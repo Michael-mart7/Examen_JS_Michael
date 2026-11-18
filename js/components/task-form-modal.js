@@ -69,6 +69,16 @@ class TaskFormModal extends HTMLElement {
                             placeholder="Agrega información sobre esta tarea..."></textarea>
                         <p class="ayuda">Describe brevemente qué debes realizar (máximo 1000 caracteres).</p>
                     </div>
+                    <div class="campo">
+                        <label for="categorySelect">Categoría</label>
+                        <select
+                            id="categorySelect"
+                            name="categoria"
+                            maxlength="1000"
+                            >
+                            <option value="">Seleccione una categoría </option>
+                            </select>
+                    </div>
 
                     <div class="campo">
                         <label for="fecha">Fecha de registro</label>

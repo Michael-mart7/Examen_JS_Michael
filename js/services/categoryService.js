@@ -110,7 +110,7 @@ export function updateCategory(id, name){
 
 export function deleteCategory(id, tasks = []){
     const assigned = tasks.some(function (task){
-        return task.categoryID === id;
+        return task.categoryId === id;
     });
 
     if (assigned){
