@@ -1,4 +1,4 @@
-import { CATEGORIES_STORAGE_KEY } from "../shared/constants"
+import { CATEGORIES_STORAGE_KEY } from '../shared/constants.js';
 
 let categories = [];
 
@@ -65,7 +65,7 @@ export function addCategory(name){
     }
 
     const exists = categories.some(function (category){
-        return category.name.toLowerCase() === clearName.toLowerCase();
+        return category.name.toLowerCase() === cleanName.toLowerCase();
     });
 
     if (exists){
@@ -123,7 +123,7 @@ export function deleteCategory(id, tasks = []){
         return category.id !== id;
     });
 
-    if (categories.legth === previousLenght){
+    if (categories.length === previousLength){
         return {ok: false, message: 'No se encontró la categoría'};
     }
     return commit ();

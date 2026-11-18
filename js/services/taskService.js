@@ -3,7 +3,6 @@
 // Nunca lanzan errores por reglas de negocio.
 
 import { STORAGE_KEY, TASK_ORIGIN } from '../shared/constants.js';
-import { CATEGORIES_STORAGE_KEY} from '../shared/constants.js';
 import { createLocalTask } from '../shared/utils.js';
 
 
@@ -23,7 +22,7 @@ function isValidTask(t) {
         typeof t.createdAt === 'string' &&
         typeof t.completed === 'boolean' &&
         (t.origin === TASK_ORIGIN.LOCAL || t.origin === TASK_ORIGIN.API) &&
-        (typeof t.categoryId === 'undefined' || t.categoryId === null || typeof t.categoryId === 'string')
+        (typeof t.categoryId === 'undefined' || t.categoryId === null || typeof t.categoryId === 'string') &&
 
         (t.sourceId === null || typeof t.sourceId === 'number')
     );
