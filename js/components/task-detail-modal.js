@@ -3,6 +3,7 @@
 // No modifica ni guarda información.
 
 import { TASK_ORIGIN } from '../shared/constants.js';
+import { getCategories } from '../services/categoryService.js';
 
 const CSS_URL = new URL('../../css/task-detail-modal.css', import.meta.url).href;
 
@@ -93,6 +94,11 @@ class TaskDetailModal extends HTMLElement {
                     </div>
 
                     <div class="campo">
+                        <span class="etiqueta">Categoría</span>
+                        <p id="categoria-tarea"></p>
+                    </div>
+
+                    <div class="campo">
                         <span class="etiqueta">Estado</span>
                         <span id="estado-tarea" class="badge"></span>
                     </div>
@@ -171,6 +177,14 @@ class TaskDetailModal extends HTMLElement {
         } else {
             description.textContent = 'No se agregó una descripción.';
         }
+
+        // Mostrar la categoría
+        const category = getCategories().find(
+            item => item.id === task.categoryId
+        );
+
+        root.getElementById('categoria-tarea').textContent =
+            category ? category.name : 'Sin categoría';
 
         // Mostrar la fecha
         root.getElementById('fecha-tarea').textContent =
