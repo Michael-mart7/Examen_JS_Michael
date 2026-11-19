@@ -14,6 +14,7 @@ import './components/task-form-modal.js';
 import './components/task-import-modal.js';
 import './components/task-app.js';
 import './components/task-detail-modal.js';
+import './components/task-category-modal.js';
 
 // Importar servicios
 import {
@@ -27,6 +28,15 @@ import {
     clearTasks,
     importTasks
 } from './services/taskService.js';
+
+//Importar servicios de categorías
+import {
+    loadCategories,
+    getCategories,
+    addCategory,
+    updateCategory,
+    deleteCategory
+} from './services/categoryService.js';
 
 import { filterTasks } from './services/filterService.js';
 import { getApiTasks } from './services/apiService.js';
@@ -357,11 +367,63 @@ app.addEventListener(EVENTS.API_RETRY, function () {
 
 });
 
+// Crear o actualizar una categoría
+app.addEventListener(EVENTS.CATEGORY_SAVE, function (event) {
+
+    const { id, name } = event.detail;
+    let resultado;
+
+    if (id) {
+        resultado = updateCategory(id, name);
+    } else {
+        resultado = addCategory(name);
+    }
+
+    if (!resultado.ok) {
+        const modal = app.shadowRoot.querySelector('task-category-modal');
+        modal.showMessage(resultado.message);
+        return;
+    }
+
+    const modal = app.shadowRoot.querySelector('task-category-modal');
+
+    modal.resetForm();
+    modal.setCategories(getCategories());
+    modal.showMessage(id
+        ? 'Categoría actualizada correctamente.'
+        : 'Categoría creada correctamente.'
+    );
+
+});
+
+// Eliminar una categoría
+app.addEventListener(EVENTS.CATEGORY_DELETE, function (event) {
+
+    const resultado = deleteCategory(event.detail.id, getTasks());
+
+    const modal = app.shadowRoot.querySelector('task-category-modal');
+
+    if (!resultado.ok) {
+        modal.showMessage(resultado.message);
+        return;
+    }
+
+    modal.setCategories(getCategories());
+    modal.showMessage('Categoría eliminada correctamente.');
+
+});
+
 // Iniciar la aplicación
 console.log('Gestor de tareas iniciado correctamente');
 console.log('API configurada:', API_URL);
 
-// Recuperar las tareas guardadas
+// Recuperar las tareas y categorías guardadas
+
+const categoriesResult = loadCategories();
+
+if (!categoriesResult.ok) {
+    app.showMessage(categoriesResult.message, 'error');
+}
 const loadResult = loadSavedTasks();
 
 refreshView();
