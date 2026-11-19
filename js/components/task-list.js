@@ -61,6 +61,7 @@ class TaskList extends HTMLElement {
                 <span>Fecha de registro</span>
                 <span>Estado</span>
                 <span>Origen</span>
+                <span>Categoría</span>
                 <span class="der">Acciones</span>
             </div>
 

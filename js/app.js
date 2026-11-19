@@ -389,6 +389,7 @@ app.addEventListener(EVENTS.CATEGORY_SAVE, function (event) {
 
     modal.resetForm();
     modal.setCategories(getCategories());
+    refreshView();
     modal.showMessage(id
         ? 'Categoría actualizada correctamente.'
         : 'Categoría creada correctamente.'

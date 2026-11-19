@@ -3,6 +3,7 @@
 // Emite: task:toggle, task:edit, task:delete
 
 import { EVENTS, TASK_ORIGIN } from '../shared/constants.js';
+import { getCategories } from '../services/categoryService.js';
 
 // Ruta del CSS calculada desde este archivo, para que funcione sin importar dónde se abra la página
 const CSS_URL = new URL('../../css/task-item.css', import.meta.url).href;
@@ -65,6 +66,11 @@ class TaskItem extends HTMLElement {
         const focusedAction = this.shadowRoot.activeElement?.dataset?.accion;
 
         const isApi = task.origin === TASK_ORIGIN.API;
+        const category = getCategories().find(
+            item => item.id === task.categoryId
+        );
+
+        const categoryName = category ? category.name : 'Sin categoría';
 
         // Aquí solo va HTML fijo. El texto del usuario se agrega abajo con textContent
         this.shadowRoot.innerHTML = `
@@ -86,6 +92,9 @@ class TaskItem extends HTMLElement {
                     ${icon(isApi ? 'cloud' : 'monitor')}
                     <span>${isApi ? 'API' : 'Local'}</span>
                 </div>
+                <div class="celda categoria">
+                    <span class="nombre-categoria"></span>
+                </div>
                <div class="celda acciones">
                     <button type="button" class="btn ver" data-accion="detalle">
                         ${icon('eye')}Ver
@@ -105,6 +114,7 @@ class TaskItem extends HTMLElement {
         const root = this.shadowRoot;
         root.querySelector('.titulo').textContent = task.title;
         root.querySelector('.fecha').textContent = formatDate(task.createdAt);
+        root.querySelector('.nombre-categoria').textContent = categoryName;
 
         // Etiquetas accesibles descriptivas
         const checkbox = root.querySelector('.check');

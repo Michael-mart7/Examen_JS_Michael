@@ -18,7 +18,7 @@
 
 .fila {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 150px 150px 130px 220px;    align-items: center;
+    grid-template-columns: minmax(0, 1fr) 130px 130px 100px 130px 220px;    align-items: center;
     gap: 0.5rem;
     min-height: 72px;
     padding: 0 1.5rem;
@@ -48,6 +48,11 @@
     color: var(--suave);
 }
 
+.categoria {
+    grid-area: categoria;
+    font-size: 0.82rem;
+}
+
 .check {
     flex: none;
     width: 22px;
@@ -63,7 +68,8 @@
 }
 
 .fecha,
-.origen {
+.origen,
+.categoria {
     color: var(--suave);
 }
 
@@ -153,7 +159,8 @@
         grid-template-areas:
             "tarea tarea"
             "fecha estado"
-            "origen acciones";
+            "origen categoria"
+            "acciones acciones";
         gap: 12px;
         min-height: 0;
         padding: 16px;
