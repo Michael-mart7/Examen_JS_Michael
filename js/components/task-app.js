@@ -1,5 +1,6 @@
 
 import { EVENTS, TASK_STATUS } from '../shared/constants.js';
+import { getCategories } from '../services/categoryService.js';
 
 class TaskApp extends HTMLElement {
 
@@ -74,6 +75,9 @@ class TaskApp extends HTMLElement {
                     <button id="btnImportar" class="btn-secondary">
                         ↓ Importar
                     </button>
+                    <button id="btnCategorias" class="btn-secondary">
+                        Administrar categorías
+                    </button>
 
                 </section>
 
@@ -99,6 +103,8 @@ class TaskApp extends HTMLElement {
                 <task-detail-modal></task-detail-modal>
 
                 <task-import-modal></task-import-modal>
+
+                <task-category-modal></task-category-modal>
 
             </main>
         `;
@@ -127,6 +133,12 @@ class TaskApp extends HTMLElement {
                 if (modal && typeof modal.open === 'function') {
                     modal.open();
                 }
+            });
+
+        // Abrir el modal de categorías
+        this.shadowRoot.querySelector('#btnCategorias')
+            .addEventListener('click', () => {
+                this.openCategories();
             });
 
         // Marcar todas las tareas locales como completadas
@@ -308,6 +320,17 @@ class TaskApp extends HTMLElement {
 
         if (modal && typeof modal.open === 'function') {
             modal.open(task);
+        }
+
+    }
+
+    // Abrir el administrador de categorías
+    openCategories() {
+
+        const modal = this.shadowRoot.querySelector('task-category-modal');
+
+        if (modal && typeof modal.open === 'function') {
+            modal.open(getCategories());
         }
 
     }
