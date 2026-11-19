@@ -124,7 +124,7 @@ async function loadApiTasks() {
 // Crear o actualizar una tarea
 app.addEventListener(EVENTS.SAVE, function (event) {
 
-    const { id, title, description, completed } = event.detail;
+    const { id, title, description, completed, categoryId } = event.detail;
 
     let resultado;
 
@@ -133,7 +133,8 @@ app.addEventListener(EVENTS.SAVE, function (event) {
         resultado = addTask({
             title: title,
             description: description,
-            completed: completed
+            completed: completed,
+            categoryId: categoryId
         });
 
         showResult(resultado, 'Tarea creada correctamente.');
@@ -143,7 +144,8 @@ app.addEventListener(EVENTS.SAVE, function (event) {
         resultado = updateTask(id, {
             title: title,
             description: description,
-            completed: completed
+            completed: completed,
+            categoryId: categoryId
         });
 
         showResult(resultado, 'Tarea actualizada correctamente.');

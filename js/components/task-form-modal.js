@@ -4,6 +4,7 @@
 // No guarda nada: solo avisa. El controlador llama a addTask() o updateTask().
 
 import { EVENTS, TASK_ORIGIN } from '../shared/constants.js';
+import { getCategories } from '../services/categoryService.js';
 
 const CSS_URL = new URL('../../css/task-form-modal.css', import.meta.url).href;
 
@@ -149,6 +150,28 @@ class TaskFormModal extends HTMLElement {
         this._opener = deepActiveElement();
 
         root.getElementById('titulo-modal').textContent = task ? 'Editar tarea' : 'Nueva tarea';
+
+
+
+        // Cargar las categorías disponibles
+        const categorySelect = root.getElementById('categorySelect');
+
+        categorySelect.innerHTML = '<option value="">Sin categoría</option>';
+
+        getCategories().forEach(function (category) {
+            const option = document.createElement('option');
+
+            option.value = category.id;
+            option.textContent = category.name;
+
+            categorySelect.appendChild(option);
+        });
+
+        // Recuperar la categoría de la tarea al editar
+        categorySelect.value = task ? (task.categoryId || '') : '';
+
+
+
         root.querySelector('.subtitulo').textContent = task
             ? 'Actualiza los datos de tu tarea.'
             : 'Un paso más hacia lo que importa.';
@@ -197,7 +220,8 @@ class TaskFormModal extends HTMLElement {
                     id: this._task ? this._task.id : null,
                     title,
                     description,
-                    completed: root.getElementById('completada').checked
+                    completed: root.getElementById('completada').checked,
+                    categoryId: root.getElementById('categorySelect').value || null
                 },
                 bubbles: true,
                 composed: true
