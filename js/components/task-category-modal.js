@@ -111,12 +111,23 @@ class TaskCategoryModal extends HTMLElement {
 
             const deleteButton = document.createElement('button');
             deleteButton.textContent = 'Eliminar';
+
             deleteButton.addEventListener('click', () => {
+
+                const confirmed = confirm(
+                    `¿Estás seguro de eliminar la categoría "${category.name}"?`
+                );
+
+                if (!confirmed) {
+                    return;
+                }
+
                 this.dispatchEvent(new CustomEvent(EVENTS.CATEGORY_DELETE, {
                     detail: { id: category.id },
                     bubbles: true,
                     composed: true
                 }));
+
             });
 
             item.append(name, editButton, deleteButton);
