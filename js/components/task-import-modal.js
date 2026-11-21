@@ -34,7 +34,11 @@ class TaskImportModal extends HTMLElement {
 
                     <div class="modal-content">
                         <div class="search-controls">
-                            <select id="categorySelect" aria-label="Categoría para importar">
+                            <select
+                                id="categorySelect"
+                                class="category-select"
+                                aria-label="Categoría para importar"
+                            >
                                 <option value="">Sin categoría</option>
                             </select>
 
