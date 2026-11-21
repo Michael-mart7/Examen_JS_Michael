@@ -1,5 +1,6 @@
 
 import { EVENTS, API_STATUS } from '../shared/constants.js';
+import { getCategories } from '../services/categoryService.js';
 
 class TaskImportModal extends HTMLElement {
     constructor() {
@@ -32,9 +33,16 @@ class TaskImportModal extends HTMLElement {
                     </header>
 
                     <div class="modal-content">
-                        <input type="search" id="searchInput"
-                            placeholder="Buscar tareas..."
-                            aria-label="Buscar tareas">
+                        <div class="search-controls">
+                            <select id="categorySelect" aria-label="Categoría para importar">
+                                <option value="">Sin categoría</option>
+                            </select>
+
+                            <input type="search" id="searchInput"
+                                placeholder="Buscar tareas..."
+                                aria-label="Buscar tareas">
+
+                        </div>
 
                         <div class="select-all">
                             <label>
@@ -155,7 +163,24 @@ class TaskImportModal extends HTMLElement {
 
     open() {
         this._selectedIds = [];
+
+        // Cargar las categorías disponibles
+        const categorySelect = this.shadowRoot.querySelector('#categorySelect');
+
+        categorySelect.innerHTML = '<option value="">Sin categoría</option>';
+
+        getCategories().forEach((category) => {
+            const option = document.createElement('option');
+
+            option.value = category.id;
+            option.textContent = category.name;
+
+            categorySelect.appendChild(option);
+        });
+
+        // Mostrar el modal
         this.shadowRoot.querySelector('#overlay').hidden = false;
+
         this.updateView();
         this.shadowRoot.querySelector('#searchInput').focus();
     }
@@ -295,9 +320,12 @@ class TaskImportModal extends HTMLElement {
     importSelected() {
         if (this._selectedIds.length === 0) return;
 
+        const categoryId = this.shadowRoot.querySelector('#categorySelect').value;
+
         this.dispatchEvent(new CustomEvent(EVENTS.IMPORT, {
             detail: {
-                sourceIds: [...this._selectedIds]
+                sourceIds: [...this._selectedIds],
+                categoryId: categoryId || null
             },
             bubbles: true,
             composed: true
