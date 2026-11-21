@@ -297,6 +297,7 @@ app.addEventListener(EVENTS.IMPORT, function (event) {
     try {
 
         const sourceIds = event.detail.sourceIds;
+        const categoryId = event.detail.categoryId || null;
 
         if (!Array.isArray(sourceIds) || sourceIds.length === 0) {
             return;
@@ -316,7 +317,7 @@ app.addEventListener(EVENTS.IMPORT, function (event) {
         }
 
         // Convertirlas al formato de nuestra aplicación
-        const normalizedTasks = mapSelectedApiTasks(selectedTasks);
+        const normalizedTasks = mapSelectedApiTasks(selectedTasks, categoryId);
 
         // Enviar las tareas convertidas al servicio de almacenamiento
         const resultado = importTasks(normalizedTasks);
